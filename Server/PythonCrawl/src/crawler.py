@@ -59,8 +59,8 @@ def ExtractMainLinks(Tag,path):
 		for link in allLinks:
 			mainLink = str(link.findAll("a")[0]).split("<a href=")[1].split('rel="bookmark"')[0].strip('"').split('"')[0]
 			listofLinks.append(mainLink)
-		if(listofLinks==NULL) : 
-		  print("No Links found based on your search, please try in some time!!!")
+		if not listofLinks : 
+		  	print("No Links found based on your search, please try in some time!!!")
 		Extract_And_Save_Page_Data(listofLinks,newpath,Tag)
 
 	

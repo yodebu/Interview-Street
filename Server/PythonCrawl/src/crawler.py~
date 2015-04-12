@@ -4,12 +4,13 @@
 '''
 --------------------------------------------------
 --------------------------------------------------
+ @ Module: Crawler - weblink generator
  @ Name:   GeeksForGeeks Article Extractor
  @ Purpose: To download and save articles filed under each and every tag passed as a Parameter mentioned in www.geeksforgeeks.org 
  @ Author: Debapriya Das
  	Dept of CSE, NIT Durgapur
 
-V1.0 - 06.02.2015 - basic implementation
+V1.0 - 06.03.2015 - basic implementation
 
  # MIT License - used for non-commercial purposes, used for college project work
  # Special thanks to - GeeksForGeeks.org
@@ -24,10 +25,11 @@ V1.0 - 06.02.2015 - basic implementation
 
 import requests
 import os
-import pdfkit
 from bs4 import BeautifulSoup
+
 import saveFile
 from saveFile import *
+
 
 
 #defines the system proxy settings
@@ -53,9 +55,12 @@ def ExtractMainLinks(Tag,path):
 		soup = BeautifulSoup(data)
 		allLinks = soup.findAll("h2",class_="post-title")
 		listofLinks = []
+		#strips out Sublinks for the from the Searched tag
 		for link in allLinks:
 			mainLink = str(link.findAll("a")[0]).split("<a href=")[1].split('rel="bookmark"')[0].strip('"').split('"')[0]
 			listofLinks.append(mainLink)
+		if not listofLinks : 
+		  print("No Links found based on your search, please try in some time!!!")
 		Extract_And_Save_Page_Data(listofLinks,newpath,Tag)
 
 	
