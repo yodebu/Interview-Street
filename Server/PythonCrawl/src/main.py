@@ -5,6 +5,7 @@
 '''
 --------------------------------------------------
 --------------------------------------------------
+ @ Module : Main Module 
  @ Name:   GeeksForGeeks Article Extractor
  @ Purpose: To download and save articles filed under each and every tag mentioned in www.geeksforgeeks.org 
  @ Author: Debapriya Das
@@ -22,7 +23,6 @@ V1.0 - 06.02.2015 - basic implementation
 
 
 import os
-import MySQLdb
 from bs4 import BeautifulSoup
 from optparse import OptionParser
 
@@ -33,6 +33,8 @@ import dbconn
 from dbconn import *
 
 
+
+#parser to parse and pass arguements into the Program
 def parse_options():
   usage = "usage: prog [options] (arg1, arg2, ... argn)"
   parser = OptionParser(usage=usage)
@@ -42,7 +44,7 @@ def parse_options():
 		      action="store", \
 		      dest="inp_tag", \
 		      default = "", \
-		      help="input tags for downloading from the website")
+		      help="input search tags for downloading from the website")
 
 
   parser.add_option("-n", "--name", \
@@ -52,12 +54,19 @@ def parse_options():
 		      default = "", \
 		      help="Enter your name to be stored in the database")
 		      
-  parser.add_option("-l", "--location", \
+  parser.add_option("-e", "--email", \
 		      type="string", \
 		      action="store", \
-		      dest="inp_location", \
-		      default = "/home/yodebu/Desktop/Project/Server/Files", \
-		      help="location where downloaded files willl be stored")
+		      dest="inp_email", \
+		      default = "", \
+		      help="Enter your email to be stored in the database")
+  
+  parser.add_option("-l", "--location", \
+		      type= "string", \
+		      action= "store", \
+		      dest= "inp_location", \
+		      default = "/home/yodebu/Desktop/Project/Interview-Street/Server/Files/", \
+		      help= "location where downloaded files willl be stored, update this according to your directory")
 		      		      	      
   opts, args = parser.parse_args()
   return opts, args
@@ -68,7 +77,7 @@ def parse_options():
 
 
 
-## enters the search name and Seaerch tag for data analysis
+## MAIN PROGRAM
 
 
 
@@ -79,9 +88,10 @@ def main():
   # parse the input parameters
   opts, args = parse_options()
   Tag = opts.inp_tag
+  email = opts.inp_email
   path = opts.inp_location
   name = opts.inp_name  
-  dbSave(name, Tag)  
+  dbSave(name, email, Tag)  
   ExtractMainLinks(Tag, path)
   
 
