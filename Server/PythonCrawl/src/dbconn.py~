@@ -1,0 +1,21 @@
+import os
+import MySQLdb
+
+
+
+def dbSave(name, search) :
+	db = MySQLdb.connect(   host="localhost", # your host, usually localhost
+				port =3306, # port on which MySQL is running
+                     		user="root", # your username
+                      		passwd="admin", # your password
+                      		db="geeksforgeeks") # name of the database
+        cur=db.cursor()
+#       cur.execute("SELECT * FROM Records")
+	#SQL query to INSERT a record into the table RECORDS.
+	cur.execute("INSERT INTO Records (name, search_string) VALUES(%s, %s)", (name, search))
+
+	db.commit()
+
+
+
+
